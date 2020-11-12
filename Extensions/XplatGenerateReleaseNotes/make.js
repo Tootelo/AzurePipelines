@@ -102,18 +102,6 @@ target.build = function() {
         // Determine OS and set command accordingly
         const cmd = /^win/.test(process.platform) ? 'npm.cmd' : 'npm';
 
-        // lint
-        if (test('-f', path.join(versionPath, "tslint.json"))){
-            try{
-                console.log(`Starting lint`);
-                util.run(`npx tslint -c tslint.json *.ts test/*.ts`,  { env: process.env, cwd: versionPath, stdio: 'inherit' })
-            }catch(error){
-                fail(error);
-            }
-        }else{
-            console.log(`Skipping lint because tsling.json does not exist.`)
-        }
-
         // Compile
         if (test('-f', path.join(versionPath, "tsconfig.json"))){
             try{
