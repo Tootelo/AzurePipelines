@@ -9,11 +9,9 @@
             "cwd": "${workspaceRoot}/Extensions/XplatGenerateReleaseNotes/v3/testconsole",
             "type": "node",
             "args": [ 
-                "--filename", "build-settings.json", 
-                "--pat", "<pat>",
-                "--githubpat", "<pat>",
-                "--bitbucketuser", "<user>",
-                "--bitbucketsecret", "<secret>"]
+                "--filename", "release-settings.json", 
+                "--pat", "7mjaxnf5gfntjmyweur6rlyj3oqgmlb2e3saq5nxmxfzne5dnqyq",
+                "--githubpat", "51f75bbdc07788a0c20b4701c96d91b3cfa07182"]
         },
     
         {

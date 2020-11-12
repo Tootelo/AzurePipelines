@@ -3,10 +3,10 @@
     "TeamProject": "BJS - CP",
     "buildId": 4270,
     "releaseDefinitionId": 14,
-    "releaseId": 520,
+    "releaseId": 532,
     "environmentName":"Prod",
-    "templatefile": "C:\\git\\AzurePipelines\\Extensions\\XplatGenerateReleaseNotes\\V3\\testconsole\\release-handlebars-template.md",
-    "outputfile": "C:\\git\\AzurePipelines\\Extensions\\XplatGenerateReleaseNotes\\V3\\testconsole\\output.md",
+    "templatefile": "C:\\git\\AzurePipelines\\Extensions\\XplatGenerateReleaseNotes\\V3\\testconsole\\release-dev-template.md",
+    "outputfile": "C:\\git\\AzurePipelines\\Extensions\\XplatGenerateReleaseNotes\\V3\\testconsole\\output-dev.md",
 
     "dumpPayloadToConsole": "false",
     "dumpPayloadToFile": "true",
@@ -31,6 +31,6 @@
     "checkStage": "true",
     "Fix349": "true",
     "tags": "",
-    "overrideBuildReleaseId": 494,
+    "overrideBuildReleaseId": 520,
     "getIndirectPullRequests": "false"
 }

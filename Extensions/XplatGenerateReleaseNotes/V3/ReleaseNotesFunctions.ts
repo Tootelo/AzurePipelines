@@ -44,6 +44,7 @@ export class UnifiedArtifactDetails {
 import * as restm from "typed-rest-client/RestClient";
 import { PersonalAccessTokenCredentialHandler, BasicCredentialHandler } from "typed-rest-client/Handlers";
 import tl = require("azure-pipelines-task-lib/task");
+import get = require("lodash.get");
 import { ReleaseEnvironment, Artifact, Deployment, DeploymentStatus, Release } from "azure-devops-node-api/interfaces/ReleaseInterfaces";
 import { IAgentSpecificApi, AgentSpecificApi } from "./agentSpecific";
 import { IReleaseApi } from "azure-devops-node-api/ReleaseApi";
@@ -604,6 +605,56 @@ export function processTemplate(
             }
         );
 
+        function noop() {
+            return '';
+        }
+        function groupBy(handlebars) {
+            var helpers = {
+                /**
+                 * @method group
+                 * @param {Array} list
+                 * @param {Object} options
+                 * @param {Object} options.hash
+                 * @param {String} options.hash.by
+                 * @return {String} Rendered partial.
+                 */
+                group: function (list, options) {
+                    options = options || {};
+                    var fn = options.fn || noop,
+                        inverse = options.inverse || noop,
+                        hash = options.hash,
+                        prop = hash && hash.by,
+                        keys = [],
+                        groups = {};
+                    if (!prop || !list || !list.length) {
+                        return inverse(this);
+                    }
+                    function groupKey(item) {
+                        var key = get(item, prop);
+                        if (keys.indexOf(key) === -1) {
+                            keys.push(key);
+                        }
+                        if (!groups[key]) {
+                            groups[key] = {
+                                value: key,
+                                items: []
+                            };
+                        }
+                        groups[key].items.push(item);
+                    }
+                    function renderGroup(buffer, key) {
+                        return buffer + fn(groups[key]);
+                    }
+                    list.forEach(groupKey);
+                    return keys.reduce(renderGroup, '');
+                }
+            };
+            handlebars.registerHelper(helpers);
+            return handlebars;
+        }
+
+        handlebars.registerHelper(groupBy(handlebars));
+
         if (typeof customHandlebarsExtensionCode !== undefined && customHandlebarsExtensionCode && customHandlebarsExtensionCode.length > 0) {
 
             agentApi.logDebug(`Saving custom Handlebars code to file in folder ${customHandlebarsExtensionFolder}`);
@@ -1023,9 +1074,10 @@ export async function generateReleaseNotes(
                                             agentApi.logInfo(`Build for artifact [${artifactInThisRelease.artifactAlias}] has not changed.  Nothing to do`);
                                         }
 
-                                        // look for any test in the current build
-                                        agentApi.logInfo(`Getting test associated with the latest build [${artifactInThisRelease.buildId}]`);
-                                        tests = await getTestsForBuild(testApi, teamProject, parseInt(artifactInThisRelease.buildId));
+                                        // // look for any test in the current build
+                                        // agentApi.logInfo(`Getting test associated with the latest build [${artifactInThisRelease.buildId}]`);
+                                        // tests = await getTestsForBuild(testApi, teamProject, parseInt(artifactInThisRelease.buildId));
+                                        tests = [];
 
                                         if (tests) {
                                             agentApi.logInfo(`Found ${tests.length} test associated with the build [${artifactInThisRelease.buildId}] adding any not already in the global test list to the list`);
