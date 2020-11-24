@@ -1,7 +1,7 @@
 # Notes de version    
 
 **Application** : {{releaseDetails.releaseDefinition.name}} <br/>
-**Version** : #{{buildDetails.id}} <br/>
+**Version** : $(Version)#{{buildDetails.id}} <br/>
 **Numéro de livraison**  : {{releaseDetails.name}} <br/>
 **Date** : {{date releaseDetails.modifiedOn "YYYY-MM-DD"}} <br/> 
 
