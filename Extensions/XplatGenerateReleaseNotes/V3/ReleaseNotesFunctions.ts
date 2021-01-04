@@ -510,7 +510,7 @@ export async function getFullWorkItemDetails (
     workItemTrackingApi: IWorkItemTrackingApi,
     workItemRefs: ResourceRef[]
 ) {
-    var workItemIds = workItemRefs.map(wi => parseInt(wi.id));
+    var workItemIds = (workItemRefs || []).map(wi => parseInt(wi.id));
     let fullWorkItems: WorkItem[] = [];
     agentApi.logInfo(`Get details of [${workItemIds.length}] WIs`);
     if (workItemIds && workItemIds.length > 0) {
@@ -1057,8 +1057,8 @@ export async function generateReleaseNotes(
                                                     activateFix = "true";
                                                 }
 
-                                                commits = await releaseApi.getReleaseChanges(artifactInThisRelease.sourceId, releaseId, mostRecentSuccessfulDeployment.release.id);
-                                                workitems = await releaseApi.getReleaseWorkItemsRefs(artifactInThisRelease.sourceId, releaseId, mostRecentSuccessfulDeployment.release.id);
+                                                commits = await releaseApi.getReleaseChanges(artifactInThisRelease.sourceId, releaseId, mostRecentSuccessfulDeployment.release.id, 100);
+                                                workitems = await releaseApi.getReleaseWorkItemsRefs(artifactInThisRelease.sourceId, releaseId, mostRecentSuccessfulDeployment.release.id, 100);
 
                                                 // enrich what we have with file names
                                                 if (commits) {
@@ -1099,7 +1099,7 @@ export async function generateReleaseNotes(
                                             globalWorkItems = globalWorkItems.concat(workitems);
                                         }
 
-                                        agentApi.logInfo(`Detected ${commits.length} commits/changesets and ${workitems.length} workitems between the current build and the last successful one`);
+                                        agentApi.logInfo(`Detected ${(commits || []).length} commits/changesets and ${(workitems || []).length} workitems between the current build and the last successful one`);
                                         agentApi.logInfo(`Detected ${tests.length} tests associated within the current build.`);
                                     }
                                 }

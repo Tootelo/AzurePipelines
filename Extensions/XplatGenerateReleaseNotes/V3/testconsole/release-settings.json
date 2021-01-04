@@ -1,9 +1,9 @@
 {
     "TeamFoundationCollectionUri": "https://dev.azure.com/tootelo-bjs",
     "TeamProject": "BJS - CP",
-    "buildId": 4270,
+    "buildId": 5635,
     "releaseDefinitionId": 14,
-    "releaseId": 532,
+    "releaseId": 872,
     "environmentName":"Prod",
     "templatefile": "C:\\git\\AzurePipelines\\Extensions\\XplatGenerateReleaseNotes\\V3\\testconsole\\release-dev-template.md",
     "outputfile": "C:\\git\\AzurePipelines\\Extensions\\XplatGenerateReleaseNotes\\V3\\testconsole\\output-dev.md",
@@ -31,6 +31,6 @@
     "checkStage": "true",
     "Fix349": "true",
     "tags": "",
-    "overrideBuildReleaseId": 520,
+    "overrideBuildReleaseId": "",
     "getIndirectPullRequests": "false"
 }
